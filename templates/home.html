@@ -15,14 +15,18 @@
   </head> 
   <body>
     <div class="container">
-      <h1 class="text-center mt-4 mb-4">Jobify</h1>
+      <h1 class="text-center mt-4 mb-4">{{company_name}}</h1>
       <img class="img-fluid" id="banner" src="https://jobify--sanky43jadhav.repl.co/static/banner.jpg" alt="Do Something Great">
       <h2 class="text-center mt-2 mb-4">About Jobify</h2>
       <p class="lead">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       </p>
       <h2 class="text-center mt-2 mb-4">Open Positions</h2>
-      <p>TODO: Show jobs here</p>
+      <div>
+        {% for job in jobs %}
+          {% include 'jobitem.html' %}
+        {% endfor %}
+      </div>
       <div class="text-center">
         <button class="btn btn-primary btn-lg">Contact Us</button>
         <p class="mt-4"> Copyright 2023, Jobify</p>
