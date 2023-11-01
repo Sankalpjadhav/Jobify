@@ -12,3 +12,8 @@ Instead of manually adding CSS instead use Bootstrap framework: https://getboots
 
 In requirements.txt, we need specify what libraries should we will be using in this project.
 gunicorn is the production server for python (flask) based application.
+
+
+Deployed the website on Render cloud: https://jobify-careers-website.onrender.com
+
+Set up cloud MySql database on PlanetScale: 

@@ -11,7 +11,21 @@
         width: 100%;
         object-fit: cover;
         margin-bottom: 16px;
-      }  
+      }
+      
+      .job-openings {
+        margin-bottom: 16px;
+      }
+      
+      .job-openings p {
+        font-size: 20px;
+        color: #555;
+      }
+      
+      .no-job-openings {
+        font-style: italic;
+        color: #999;
+      }
     </style>
   </head> 
   <body>
@@ -30,10 +44,18 @@
         </div>
       </div>
       <h2 class="text-center mt-2 mb-4">Open Positions</h2>
-      <div>
-        {% for job in jobs %}
-          {% include 'jobitem.html' %}
-        {% endfor %}
+      <div class="job-openings">
+        {% if jobs %}
+          <div>
+            {% for job in jobs %}
+              {% include 'jobitem.html' %}
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="text-center no-job-openings">
+            <p>There are no job openings at the moment ☹</p>
+          </div>
+        {% endif %}
       </div>
       <div class="text-center">
         <button class="btn btn-primary btn-lg">Contact Us</button>
