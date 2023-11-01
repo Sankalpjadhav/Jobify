@@ -1,4 +1,4 @@
 Flask
 gunicorn
-flask_sqlalchemy
 sqlite3
+flask_sqlalchemy
