@@ -15,6 +15,19 @@ def db_connection():
     return None
 
 
+@app.route("/clear")
+def clear_db():
+  conn = db_connection()
+  if conn is not None:
+    cursor = conn.cursor()
+    cursor.execute("DROP TABLE IF EXISTS job_postings")
+    sql_query_to_clear_table = """DELETE FROM job_postings"""
+    cursor.execute(sql_query_to_clear_table)
+    conn.commit()
+    return "Database cleared"
+  else:
+    return "Error: unable to connect to database"
+
 
 @app.route("/")
 def hello_world():

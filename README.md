@@ -16,4 +16,4 @@ gunicorn is the production server for python (flask) based application.
 
 Deployed the website on Render cloud: https://jobify-careers-website.onrender.com
 
-Set up cloud MySql database on PlanetScale: 
+Set up sqlite database

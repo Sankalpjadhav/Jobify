@@ -26,6 +26,18 @@
         font-style: italic;
         color: #999;
       }
+
+      .btn-primary.contact-button {
+        background-color: #555; /* update the background color */
+        border-color: #555; /* update the border color */
+        color: #fff; /* update the text color */
+      }
+
+      .btn-primary.contact-button:hover {
+        background-color: #444; /* update the background color on hover */
+        border-color: #444; /* update the border color on hover */
+      }
+      
     </style>
   </head> 
   <body>
@@ -36,7 +48,7 @@
       <div class="row" style="margin-bottom:16px;">
         <div class="col-md-6">
           <p class="lead">
-            Welcome to Jobify, your ultimate destination for job seekers and recruiters alike. Jobify is a cutting-edge application designed to simplify the job search and hiring process, making it faster and more efficient for everyone involved. With a user-friendly interface and a wide range of job listings, Jobify is the perfect tool for anyone looking for a new career opportunity. Whether you're a seasoned professional looking for a challenge, a seasoned student looking for a challenge, or a seasoned professional looking for a challenge, Jobify has you covered.
+            Welcome to Jobify, your ultimate destination for job seekers and recruiters alike. Jobify is a cutting-edge application designed to simplify the job search and hiring process, making it faster and more efficient for everyone involved. With a user-friendly interface and a wide range of job listings, Jobify is the perfect tool for anyone looking for a new career opportunity. Whether you're a seasoned professional looking for a challenge, or a seasoned student looking for a challenge, Jobify has you covered.
           </p>
         </div>
         <div class="d-none d-md-block col-md-6">
@@ -58,7 +70,7 @@
         {% endif %}
       </div>
       <div class="text-center">
-        <button class="btn btn-primary btn-lg">Contact Us</button>
+        <a href="mailto:sanky43jadhav@gmail.com" class="btn btn-primary btn-lg contact-button">Contact Us</a>
       </div>
     </div>
     {% include 'footer.html' %}
