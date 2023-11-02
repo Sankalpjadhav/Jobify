@@ -1,0 +1,26 @@
+<h1>{{ job[1] }}</h1>
+<p><b>Company:</b> {{ job[2] }}</p>
+<p><b>Location:</b> {{ job[3] }}</p>
+{% if job[4] %}
+  <p><b>Salary:</b> {{ job[4] }}</p>
+{% endif %}
+
+<form action="/apply" method="post">
+  <input type="hidden" name="job_id" value="{{ job[0] }}">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" class="form-control" id="name" name="name" required>
+  </div>
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" class="form-control" id="email" name="email" required>
+  </div>
+  <div class="form-group">
+    <label for="skills">Skills:</label>
+    <input type="text" class="form-control" id="skills" name="skills" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Apply</button>
+</form>
+
+
+<a href="/" class="btn btn-primary">Back to Home</a>

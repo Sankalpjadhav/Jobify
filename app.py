@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, redirect
 import sqlite3
 
 app = Flask(__name__)
@@ -20,9 +20,9 @@ def clear_db():
   conn = db_connection()
   if conn is not None:
     cursor = conn.cursor()
-    cursor.execute("DROP TABLE IF EXISTS job_postings")
-    sql_query_to_clear_table = """DELETE FROM job_postings"""
+    sql_query_to_clear_table = """DELETE FROM userdata"""
     cursor.execute(sql_query_to_clear_table)
+    cursor.execute("DROP TABLE IF EXISTS userdata")
     conn.commit()
     return "Database cleared"
   else:
@@ -88,6 +88,58 @@ def list_jobs():
            job_requirement=row[6]) for row in cursor.fetchall()
   ]
   return jsonify(jobs)
+
+
+@app.route("/api/applicants")
+def list_applicants():
+    conn = db_connection()
+    cursor = conn.execute("SELECT id, name, email, skills, job_id FROM userdata")
+    applicants = [
+        dict(
+            id=row[0],
+            name=row[1],
+            email=row[2],
+            skills=row[3],
+            job_id=row[4]
+        ) for row in cursor.fetchall()
+    ]
+    return jsonify(applicants)
+
+
+@app.route("/apply", methods=['POST'])
+def apply_job():
+    name = request.form['name']
+    email = request.form['email']
+    skills = request.form['skills']
+    job_id = request.form['job_id']
+
+    conn = db_connection()
+    cursor = conn.execute(
+        "SELECT id FROM userdata WHERE email=? AND job_id=?", (email, job_id))
+    result = cursor.fetchone()
+
+    if result is not None:
+        # Display a popup indicating that the user has already applied for this job
+        return render_template('jobapplied.html')
+
+    conn.execute(
+      "INSERT INTO userdata (name, email, skills, job_id) VALUES (?, ?, ?, ?)",
+      (name, email, skills, job_id))
+    conn.commit()
+
+    # Redirect to the job details page, passing the job_id as a parameter
+    return redirect(f"/job/{job_id}")
+
+
+
+@app.route("/job/<job_id>")
+def job_details(job_id):
+    conn = db_connection()
+    cursor = conn.execute("SELECT * FROM job_postings WHERE id=?", (job_id,))
+    job = cursor.fetchone()
+    cursor = conn.execute("SELECT * FROM userdata WHERE job_id=?", (job_id,))
+    applicants = cursor.fetchall()
+    return render_template('jobdetails.html', job=job, applicants=applicants)
 
 
 if __name__ == "__main__":

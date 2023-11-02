@@ -3,18 +3,31 @@ import sqlite3
 conn = sqlite3.connect('jobopenings.sqlite')
 cursor = conn.cursor()
 
-# Execute SQL query to create the table with corrected column definition
-sql_query_to_create_table = """CREATE TABLE IF NOT EXISTS job_postings (
-                                id INTEGER PRIMARY KEY AUTOINCREMENT,  
-                                title TEXT NOT NULL,  
-                                company TEXT NOT NULL,
-                                location TEXT NOT NULL,
-                                salary TEXT NOT NULL,
-                                job_description TEXT NOT NULL,
-                                job_requirement TEXT NOT NULL
-                            );"""
+# Create the job_postings table
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS job_postings (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,  
+        title TEXT NOT NULL,
+        company TEXT NOT NULL,
+        location TEXT NOT NULL,
+        salary TEXT NOT NULL,
+        job_description TEXT NOT NULL,
+        job_requirement TEXT NOT NULL
+    );
+""")
 
-cursor.execute(sql_query_to_create_table)
+# Create the userdata table
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS userdata (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL,
+        skills TEXT NOT NULL,
+        job_id INTEGER NOT NULL,
+        UNIQUE (id, email),
+        FOREIGN KEY (job_id) REFERENCES job_postings (id)
+    );
+""")
 
 cursor.close()
 conn.close()
