@@ -137,9 +137,12 @@ def job_details(job_id):
     conn = db_connection()
     cursor = conn.execute("SELECT * FROM job_postings WHERE id=?", (job_id,))
     job = cursor.fetchone()
-    cursor = conn.execute("SELECT * FROM userdata WHERE job_id=?", (job_id,))
-    applicants = cursor.fetchall()
-    return render_template('jobdetails.html', job=job, applicants=applicants)
+    cursor = conn.execute("SELECT COUNT(*) FROM userdata WHERE job_id=?", (job_id,))
+    user_count = cursor.fetchone()[0]  # Retrieve count directly from the database
+    # print(applicants)  # Print the applicants to check the data
+    return render_template('jobdetails.html', job=job, user_count=user_count)
+
+
 
 
 if __name__ == "__main__":
