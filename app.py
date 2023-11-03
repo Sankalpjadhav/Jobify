@@ -20,9 +20,9 @@ def clear_db():
   conn = db_connection()
   if conn is not None:
     cursor = conn.cursor()
-    sql_query_to_clear_table = """DELETE FROM userdata"""
+    sql_query_to_clear_table = """DELETE FROM job_postings WHERE id = 7"""
     cursor.execute(sql_query_to_clear_table)
-    cursor.execute("DROP TABLE IF EXISTS userdata")
+    # cursor.execute("DROP TABLE IF EXISTS userdata")
     conn.commit()
     return "Database cleared"
   else:
@@ -70,7 +70,9 @@ def add_jobs():
              job_description=row[5],
              job_requirement=row[6]) for row in cursor.fetchall()
     ]
-    return render_template('home.html', jobs=JOBS, company_name='Jobify')
+    return render_template('home.html',
+                           jobs=JOBS,
+                           company_name='Jobify')
   return render_template('addjobs.html')
 
 
@@ -92,57 +94,51 @@ def list_jobs():
 
 @app.route("/api/applicants")
 def list_applicants():
-    conn = db_connection()
-    cursor = conn.execute("SELECT id, name, email, skills, job_id FROM userdata")
-    applicants = [
-        dict(
-            id=row[0],
-            name=row[1],
-            email=row[2],
-            skills=row[3],
-            job_id=row[4]
-        ) for row in cursor.fetchall()
-    ]
-    return jsonify(applicants)
+  conn = db_connection()
+  cursor = conn.execute("SELECT id, name, email, skills, job_id FROM userdata")
+  applicants = [
+      dict(id=row[0], name=row[1], email=row[2], skills=row[3], job_id=row[4])
+      for row in cursor.fetchall()
+  ]
+  return jsonify(applicants)
 
 
 @app.route("/apply", methods=['POST'])
 def apply_job():
-    name = request.form['name']
-    email = request.form['email']
-    skills = request.form['skills']
-    job_id = request.form['job_id']
+  name = request.form['name']
+  email = request.form['email']
+  skills = request.form['skills']
+  job_id = request.form['job_id']
 
-    conn = db_connection()
-    cursor = conn.execute(
-        "SELECT id FROM userdata WHERE email=? AND job_id=?", (email, job_id))
-    result = cursor.fetchone()
+  conn = db_connection()
+  cursor = conn.execute("SELECT id FROM userdata WHERE email=? AND job_id=?",
+                        (email, job_id))
+  result = cursor.fetchone()
 
-    if result is not None:
-        # Display a popup indicating that the user has already applied for this job
-        return render_template('jobapplied.html')
+  if result is not None:
+    # Display a popup indicating that the user has already applied for this job
+    return render_template('jobapplied.html')
 
-    conn.execute(
+  conn.execute(
       "INSERT INTO userdata (name, email, skills, job_id) VALUES (?, ?, ?, ?)",
       (name, email, skills, job_id))
-    conn.commit()
+  conn.commit()
 
-    # Redirect to the job details page, passing the job_id as a parameter
-    return redirect(f"/job/{job_id}")
-
+  # Redirect to the job details page, passing the job_id as a parameter
+  return redirect(f"/job/{job_id}")
 
 
 @app.route("/job/<job_id>")
 def job_details(job_id):
-    conn = db_connection()
-    cursor = conn.execute("SELECT * FROM job_postings WHERE id=?", (job_id,))
-    job = cursor.fetchone()
-    cursor = conn.execute("SELECT COUNT(*) FROM userdata WHERE job_id=?", (job_id,))
-    user_count = cursor.fetchone()[0]  # Retrieve count directly from the database
-    # print(applicants)  # Print the applicants to check the data
-    return render_template('jobdetails.html', job=job, user_count=user_count)
-
-
+  conn = db_connection()
+  cursor = conn.execute("SELECT * FROM job_postings WHERE id=?", (job_id, ))
+  job = cursor.fetchone()
+  cursor = conn.execute("SELECT COUNT(*) FROM userdata WHERE job_id=?",
+                        (job_id, ))
+  user_count = cursor.fetchone()[
+      0]  # Retrieve count directly from the database
+  # print(applicants)  # Print the applicants to check the data
+  return render_template('jobdetails.html', job=job, user_count=user_count)
 
 
 if __name__ == "__main__":

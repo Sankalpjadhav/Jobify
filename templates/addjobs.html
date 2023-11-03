@@ -1,65 +1,101 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Jobify Careers</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
-      .btn-primary.contact-button {
-        background-color: #555; /* update the background color */
-        border-color: #555; /* update the border color */
-        color: #fff; /* update the text color */
-      }
+        .contact-button {
+            background-color: #555;
+            border-color: #555;
+            color: #fff;
+        }
 
-      .btn-primary.contact-button:hover {
-        background-color: #444; /* update the background color on hover */
-        border-color: #444; /* update the border color on hover */
-      }
+        .contact-button:hover {
+            background-color: #444;
+            border-color: #444;
+        }
 
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .form-control {
+            border: 1px solid #ccc;
+        }
+
+        .form-control:focus {
+            border-color: #555;
+            box-shadow: none;
+        }
+
+        .row {
+            margin-bottom: 16px;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     {% include 'nav.html' %}
     <div class="container">
-      <h1 class="text-center mt-4 mb-4">Add Job</h1>
-      <div class="row">
-        <div class="col-md-6">
-          <form method="POST" action="/addjobs">
-            <div class="mb-3">
-              <label for="title" class="form-label">Title</label>
-              <input type="text" class="form-control" id="title" name="title" required>
+        <h1 class="text-center mt-4 mb-4">Add Job</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <form method="POST" action="/addjobs">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="company" class="form-label">Company</label>
+                        <input type="text" class="form-control" id="company" name="company" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class "form-control" id="location" name="location" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="salary" class="form-label">Salary</label>
+                        <input type="text" class="form-control" id="salary" name="salary" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Job Description</label>
+                        <textarea class="form-control form-textarea" id="description" name="description" rows="5" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="requirement" class="form-label">Job Requirement</label>
+                        <textarea class="form-control form-textarea" id="requirement" name="requirement" rows="5" required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg contact-button">Submit</button>
+                    </div>
+                </form>
             </div>
-            <div class="mb-3">
-              <label for="company" class="form-label">Company</label>
-              <input type="text" class="form-control" id="company" name="company" required>
+            <div class="d-none d-md-block col-md-6">
+                <img src="/static/addjobspic.jpg" style="height: 700px; width: 100%; object-fit: cover; border-radius: 4px;">
             </div>
-            <div class="mb-3">
-              <label for="location" class="form-label">Location</label>
-              <input type="text" class="form-control" id="location" name="location" required>
-            </div>
-            <div class="mb-3">
-              <label for="salary" class="form-label">Salary</label>
-              <input type="text" class="form-control" id="salary" name="salary" required>
-            </div>
-            <div class="mb-3">
-              <label for="description" class="form-label">Job Description</label>
-              <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="requirement" class="form-label">Job Requirement</label>
-              <textarea class="form-control" id="requirement" name="requirement" rows="5" required></textarea>
-            </div>
-            <div class="text-center">
-              <button type="submit" class="btn btn-primary btn-lg contact-button">Submit</button>
-            </div>
-          </form>
         </div>
-        <div class="d-none d-md-block col-md-6">
-          <img src="/static/addjobspic.jpg" style="height: 700px; width: 100%; object-fit: cover; border-radius: 4px;">
-        </div>
-      </div>
     </div>
     {% include 'footer.html' %}
-  </body>
+</body>
+
 </html>

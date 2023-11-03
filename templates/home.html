@@ -1,78 +1,112 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Jobify Careers</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
-      #banner{
-        height: 360px;
-        width: 100%;
-        object-fit: cover;
-        margin-bottom: 16px;
-      }
-      
-      .job-openings {
-        margin-bottom: 16px;
-      }
-      
-      .job-openings p {
-        font-size: 20px;
-        color: #555;
-      }
-      
-      .no-job-openings {
-        font-style: italic;
-        color: #999;
-      }
+        #banner {
+            height: 360px;
+            width: 100%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
 
-      .btn-primary.contact-button {
-        background-color: #555; /* update the background color */
-        border-color: #555; /* update the border color */
-        color: #fff; /* update the text color */
-      }
+        .job-openings {
+            margin-bottom: 16px;
+        }
 
-      .btn-primary.contact-button:hover {
-        background-color: #444; /* update the background color on hover */
-        border-color: #444; /* update the border color on hover */
-      }
-      
+        .job-openings p {
+            font-size: 20px;
+            color: #555;
+        }
+
+        .no-job-openings {
+            font-style: italic;
+            color: #999;
+        }
+
+        .contact-button {
+            background-color: #555;
+            border-color: #555;
+            color: #fff;
+        }
+
+        .contact-button:hover {
+            background-color: #444;
+            border-color: #444;
+        }
+
+        /* Additional styling */
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-description {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .company-description {
+            font-size: 16px;
+        }
+
+        .job-title {
+            color: #007bff;
+        }
+
+        .apply-button {
+            margin-top: 20px;
+        }
     </style>
-  </head> 
-  <body>
+</head>
+
+<body>
     {% include 'nav.html' %}
     <img class="img-fluid" id="banner" src="static/banner-1.jpg" alt="Do Something Great">
     <div class="container">
-      <h1 class="text-center mt-4 mb-4">{{company_name}}</h1>
-      <div class="row" style="margin-bottom:16px;">
-        <div class="col-md-6">
-          <p class="lead">
-            Welcome to Jobify, your ultimate destination for job seekers and recruiters alike. Jobify is a cutting-edge application designed to simplify the job search and hiring process, making it faster and more efficient for everyone involved. With a user-friendly interface and a wide range of job listings, Jobify is the perfect tool for anyone looking for a new career opportunity. Whether you're a seasoned professional looking for a challenge, or a seasoned student looking for a challenge, Jobify has you covered.
-          </p>
+        <h1 class="text-center mt-4 mb-4">{{company_name}}</h1>
+        <div class="row" style="margin-bottom: 16px;">
+            <div class="col-md-6">
+                <p class="job-description">
+                    Welcome to Jobify, your ultimate destination for job seekers and recruiters alike. Jobify is a
+                    cutting-edge application designed to simplify the job search and hiring process, making it faster and
+                    more efficient for everyone involved. With a user-friendly interface and a wide range of job listings,
+                    Jobify is the perfect tool for anyone looking for a new career opportunity. Whether you're a seasoned
+                    professional looking for a challenge, or a seasoned student looking for a challenge, Jobify has you
+                    covered.
+                </p>
+            </div>
+            <div class="d-none d-md-block col-md-6">
+                <img src="/static/working.jpg" style="height:320px; border-radius: 4px;">
+            </div>
         </div>
-        <div class="d-none d-md-block col-md-6">
-          <img src="/static/working.jpg" style="height:320px; border-radius: 4px;">
+        <h2 class="text-center mt-2 mb-4" id="open-positions">Open Positions</h2>
+        <div class="job-openings">
+            {% if jobs %}
+            <div>
+                {% for job in jobs %}
+                {% include 'jobitem.html' %}
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center no-job-openings">
+                <p>There are no job openings at the moment ☹</p>
+            </div>
+            {% endif %}
         </div>
-      </div>
-      <h2 class="text-center mt-2 mb-4">Open Positions</h2>
-      <div class="job-openings">
-        {% if jobs %}
-          <div>
-            {% for job in jobs %}
-              {% include 'jobitem.html' %}
-            {% endfor %}
-          </div>
-        {% else %}
-          <div class="text-center no-job-openings">
-            <p>There are no job openings at the moment ☹</p>
-          </div>
-        {% endif %}
-      </div>
-      <div class="text-center">
-        <a href="mailto:sanky43jadhav@gmail.com" class="btn btn-outline-secondary btn-lg contact-button">Contact Us</a>
-      </div>
+        <div class="text-center">
+            <a href="mailto:sanky43jadhav@gmail.com" class="btn btn-primary btn-lg contact-button">Contact Us</a>
+        </div>
     </div>
     {% include 'footer.html' %}
-  </body>
+</body>
+
 </html>

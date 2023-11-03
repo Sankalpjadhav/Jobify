@@ -1,48 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Jobify Careers</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
-      .apply-button {
-        margin-top: 20px; /* add margin to the top of the button */
-      }
+        .apply-button {
+            margin-top: 20px;
+        }
+
+        .job-details {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .apply-form {
+            margin-top: 20px;
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     {% include 'nav.html' %}
     <div class="container">
-      <h1>{{ job[1] }}</h1>
-      <p><b>Company:</b> {{ job[2] }}</p>
-      <p><b>Location:</b> {{ job[3] }}</p>
-      {% if job[4] %}
-        <p><b>Salary:</b> {{ job[4] }}</p>
-      {% endif %}
-      <p><b>Job description:</b> {{ job[5] }}</p>
-      <p><b>Job requirement:</b> {{ job[6] }}</p>
-      <!-- <p><b>Applicants:</b> {{ applicants }}</p> <!-- Display the applicants list for debugging -->
-      <p><b>Number of applicants:</b> {{ user_count }}</p>
-      <form action="/apply" method="post">
-        <input type="hidden" name="job_id" value="{{ job[0] }}">
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input type="text" class="form-control" id="name" name="name" required>
+        <div class="job-details">
+            <h1>{{ job[1] }}</h1>
+            <p><b>Company:</b> {{ job[2] }}</p>
+            <p><b>Location:</b> {{ job[3] }}</p>
+            {% if job[4] %}
+                <p><b>Salary:</b> {{ job[4] }}</p>
+            {% endif %}
+            <p><b>Job description:</b> {{ job[5] }}</p>
+            <p><b>Job requirement:</b> {{ job[6] }}</p>
+            <p><b>Number of applicants:</b> {{ user_count }}</p>
         </div>
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" class="form-control" id="email" name="email" required>
+
+        <div class="apply-form">
+            <form action="/apply" method="post">
+                <input type="hidden" name="job_id" value="{{ job[0] }}">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="skills">Skills:</label>
+                    <input type="text" class="form-control" id="skills" name="skills" required>
+                </div>
+                <div class="apply-button">
+                    <button type="submit" class="btn btn-primary">Apply</button>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-          <label for="skills">Skills:</label>
-          <input type="text" class="form-control" id="skills" name="skills" required>
-        </div>
-        <div class="apply-button">
-          <button type="submit" class="btn btn-outline-secondary">Apply</button>
-        </div>
-      </form>
     </div>
     {% include 'footer.html' %}
-  </body>
+</body>
+
 </html>
